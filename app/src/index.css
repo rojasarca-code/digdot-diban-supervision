@@ -46,7 +46,7 @@ body {
   display: none;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   #bs2-root {
     flex-direction: column !important;
     height: 100dvh !important;
@@ -153,5 +153,47 @@ body {
   #bs2-topbar-actions button {
     flex: 1;
     min-width: 140px;
+  }
+}
+
+/* Phones in landscape have very little height — the drawer's header
+   (logo/title) and footer (progress + buttons) can together exceed
+   the screen height, cutting off the section list or the footer
+   buttons. Shrink the chrome and let the whole drawer scroll as one
+   unit so every control stays reachable. */
+@media (max-width: 900px) and (max-height: 560px) {
+  #bs2-sidebar {
+    overflow-y: auto !important;
+  }
+
+  #bs2-sidebar .bs2-sb-navlist {
+    flex: none !important;
+    overflow: visible !important;
+  }
+
+  #bs2-sidebar .bs2-sb-header {
+    padding: 10px 16px 8px !important;
+  }
+
+  #bs2-sidebar .bs2-sb-logo {
+    height: 20px !important;
+    margin-bottom: 6px !important;
+  }
+
+  #bs2-sidebar .bs2-sb-title {
+    font-size: 13px !important;
+  }
+
+  #bs2-sidebar .bs2-sb-quicknav {
+    padding: 8px 14px 4px !important;
+  }
+
+  #bs2-sidebar .bs2-sb-footer {
+    padding: 10px 14px !important;
+    gap: 6px !important;
+  }
+
+  #bs2-mobile-topbar {
+    padding: 8px 16px;
   }
 }

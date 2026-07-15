@@ -24,22 +24,22 @@ export default function Sidebar({ sections, sectionStats, view, activeSectionId,
 
   return (
     <div id="bs2-sidebar" className={open ? 'bs2-sidebar-open' : ''} style={{ width: 288, flexShrink: 0, background: '#ffffff', borderRight: '1px solid oklch(90% 0.006 90)', display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid oklch(90% 0.006 90)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
+      <div className="bs2-sb-header" style={{ padding: '20px 20px 16px', borderBottom: '1px solid oklch(90% 0.006 90)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
         <div>
-          <img src={logo} alt="MINSA Perú" style={{ height: 30, objectFit: 'contain', display: 'block', marginBottom: 12 }} />
-          <div style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.25 }}>Supervisión Bancos de Sangre Tipo II</div>
+          <img src={logo} alt="MINSA Perú" className="bs2-sb-logo" style={{ height: 30, objectFit: 'contain', display: 'block', marginBottom: 12 }} />
+          <div className="bs2-sb-title" style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.25 }}>Supervisión Bancos de Sangre Tipo II</div>
           <div style={{ fontSize: 11.5, fontWeight: 600, color: 'oklch(52% 0.19 25)', letterSpacing: '.03em', marginTop: 2 }}>DIBAN · DIGDOT · MINSA</div>
         </div>
         <button onClick={onClose} aria-label="Cerrar menú" className="bs2-sidebar-close" style={{ display: 'none', background: 'none', border: '1px solid oklch(88% 0.006 90)', borderRadius: 8, fontSize: 16, padding: '4px 9px', cursor: 'pointer', flexShrink: 0 }}>✕</button>
       </div>
 
-      <div style={{ padding: '14px 14px 6px' }}>
+      <div className="bs2-sb-quicknav" style={{ padding: '14px 14px 6px' }}>
         <button onClick={handleGoHeader} style={navButtonStyle(view === 'header')}>
           <span style={{ fontSize: 13.5 }}>📋 Datos generales</span>
         </button>
       </div>
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '2px 14px 14px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <div className="bs2-sb-navlist" style={{ flex: 1, overflowY: 'auto', padding: '2px 14px 14px', display: 'flex', flexDirection: 'column', gap: 4 }}>
         <div style={{ fontSize: 10.5, fontWeight: 700, color: 'oklch(55% 0.01 30)', letterSpacing: '.08em', textTransform: 'uppercase', margin: '10px 6px 2px' }}>Secciones de verificación</div>
         {navSections.map(({ sec, st, active, pct }) => (
           <button key={sec.id} onClick={() => handleGoSection(sec.id)} style={navButtonStyle(active)}>
@@ -59,7 +59,7 @@ export default function Sidebar({ sections, sectionStats, view, activeSectionId,
         ))}
       </div>
 
-      <div style={{ padding: 14, borderTop: '1px solid oklch(90% 0.006 90)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div className="bs2-sb-footer" style={{ padding: 14, borderTop: '1px solid oklch(90% 0.006 90)', display: 'flex', flexDirection: 'column', gap: 8 }}>
         <div style={{ fontSize: 11.5, color: 'oklch(50% 0.01 30)', display: 'flex', justifyContent: 'space-between' }}>
           <span>Avance general</span><span style={{ fontWeight: 700 }}>{overallPct}%</span>
         </div>
