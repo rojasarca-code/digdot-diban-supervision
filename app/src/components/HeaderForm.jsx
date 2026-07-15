@@ -29,7 +29,7 @@ export default function HeaderForm({ header, setHeaderField }) {
       <div style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>Datos generales de la supervisión</div>
       <div style={{ fontSize: 14, color: 'oklch(50% 0.01 30)', marginBottom: 28 }}>Información de la institución supervisada y datos de la visita.</div>
 
-      <div style={{ background: '#fff', border: '1px solid oklch(90% 0.006 90)', borderRadius: 14, padding: 28, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+      <div className="bs2-grid-2" style={{ background: '#fff', border: '1px solid oklch(90% 0.006 90)', borderRadius: 14, padding: 28, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
         <Field label="Región">
           <input value={header.region} onChange={set('region')} placeholder="Ej. Lima" style={inputStyle} />
         </Field>
@@ -64,7 +64,7 @@ export default function HeaderForm({ header, setHeaderField }) {
         </Field>
       </div>
 
-      <div style={{ marginTop: 24, padding: '18px 20px', background: 'oklch(96% 0.03 25)', border: '1px solid oklch(88% 0.06 25)', borderRadius: 12, fontSize: 13, color: 'oklch(35% 0.1 25)' }}>
+      <div className="bs2-card" style={{ marginTop: 24, padding: '18px 20px', background: 'oklch(96% 0.03 25)', border: '1px solid oklch(88% 0.06 25)', borderRadius: 12, fontSize: 13, color: 'oklch(35% 0.1 25)' }}>
         Completa estos datos y luego recorre las secciones I–XIV del panel izquierdo marcando cada ítem como <b>Sí</b> o <b>No</b>. Cuando termines, usa <b>«Generar Acta de Supervisión»</b> para producir el documento final.
       </div>
     </div>

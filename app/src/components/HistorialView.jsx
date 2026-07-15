@@ -8,7 +8,7 @@ export default function HistorialView({ history, loadFromHistory, deleteFromHist
       {history.length > 0 ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {history.map(h => (
-            <div key={h.id} style={{ background: '#fff', border: '1px solid oklch(90% 0.006 90)', borderRadius: 12, padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+            <div key={h.id} className="bs2-row" style={{ background: '#fff', border: '1px solid oklch(90% 0.006 90)', borderRadius: 12, padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
               <div>
                 <div style={{ fontWeight: 700, fontSize: 14.5 }}>{h.nombreIpress}</div>
                 <div style={{ fontSize: 12.5, color: 'oklch(50% 0.01 30)' }}>Acta {h.actaNro} · {h.generatedDate} {h.generatedTime} · {h.obsCount} obs. · {h.pctCumplimiento}% cumplimiento</div>

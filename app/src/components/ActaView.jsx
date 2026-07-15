@@ -10,7 +10,7 @@ export default function ActaView({ acta, goHeader, saveActaToHistory, printActa 
         <button onClick={printActa} style={actaButtonStyleInline}>🖨 Imprimir / Exportar PDF</button>
       </div>
 
-      <div style={{ background: '#fff', border: '1px solid oklch(90% 0.006 90)', borderRadius: 14, padding: '44px 48px' }}>
+      <div className="bs2-acta-card" style={{ background: '#fff', border: '1px solid oklch(90% 0.006 90)', borderRadius: 14, padding: '44px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '3px solid oklch(52% 0.19 25)', paddingBottom: 16, marginBottom: 24 }}>
           <img src={logo} alt="MINSA Perú" style={{ height: 34, objectFit: 'contain' }} />
           <div style={{ textAlign: 'right' }}>
@@ -19,7 +19,7 @@ export default function ActaView({ acta, goHeader, saveActaToHistory, printActa 
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px 32px', fontSize: 13.5, marginBottom: 20 }}>
+        <div className="bs2-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px 32px', fontSize: 13.5, marginBottom: 20 }}>
           <div><b>Institución:</b> {acta.nombreIpress}</div>
           <div><b>Región:</b> {acta.region}</div>
           <div><b>Código RENIPRESS:</b> {acta.codigoRenipress}</div>
@@ -69,7 +69,7 @@ export default function ActaView({ acta, goHeader, saveActaToHistory, printActa 
           <div style={{ fontSize: 13.5, color: 'oklch(55% 0.01 30)', fontStyle: 'italic', marginBottom: 8 }}>Sin observaciones registradas — todos los ítems evaluados cumplen.</div>
         )}
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, marginTop: 56 }}>
+        <div className="bs2-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, marginTop: 56 }}>
           <div style={{ textAlign: 'center' }}>
             <div style={{ borderTop: '1px solid #333', paddingTop: 8, fontSize: 13 }}>{acta.supervisorDiban}<br />Supervisor DIBAN</div>
           </div>

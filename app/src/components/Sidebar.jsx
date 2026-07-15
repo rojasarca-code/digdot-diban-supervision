@@ -1,8 +1,15 @@
 import logo from '../assets/minsa-logo.png';
 import { navButtonStyle, actaButtonStyle } from '../lib/styles.js';
 
-export default function Sidebar({ sections, sectionStats, view, activeSectionId, goHeader, goSection, goActa, goHistorial, newSupervision, historyCount }) {
+export default function Sidebar({ sections, sectionStats, view, activeSectionId, goHeader, goSection, goActa, goHistorial, newSupervision, historyCount, open, onClose }) {
   let overallAnswered = 0, overallTotal = 0;
+
+  const withClose = (fn) => (...args) => { fn(...args); if (onClose) onClose(); };
+  const handleGoHeader = withClose(goHeader);
+  const handleGoSection = withClose(goSection);
+  const handleGoActa = withClose(goActa);
+  const handleGoHistorial = withClose(goHistorial);
+  const handleNewSupervision = withClose(newSupervision);
 
   const navSections = sections.map(sec => {
     const st = sectionStats(sec);
@@ -16,15 +23,18 @@ export default function Sidebar({ sections, sectionStats, view, activeSectionId,
   const overallPct = overallTotal ? Math.round((overallAnswered / overallTotal) * 100) : 0;
 
   return (
-    <div id="bs2-sidebar" style={{ width: 288, flexShrink: 0, background: '#ffffff', borderRight: '1px solid oklch(90% 0.006 90)', display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid oklch(90% 0.006 90)' }}>
-        <img src={logo} alt="MINSA Perú" style={{ height: 30, objectFit: 'contain', display: 'block', marginBottom: 12 }} />
-        <div style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.25 }}>Supervisión Bancos de Sangre Tipo II</div>
-        <div style={{ fontSize: 11.5, fontWeight: 600, color: 'oklch(52% 0.19 25)', letterSpacing: '.03em', marginTop: 2 }}>DIBAN · DIGDOT · MINSA</div>
+    <div id="bs2-sidebar" className={open ? 'bs2-sidebar-open' : ''} style={{ width: 288, flexShrink: 0, background: '#ffffff', borderRight: '1px solid oklch(90% 0.006 90)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div style={{ padding: '20px 20px 16px', borderBottom: '1px solid oklch(90% 0.006 90)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
+        <div>
+          <img src={logo} alt="MINSA Perú" style={{ height: 30, objectFit: 'contain', display: 'block', marginBottom: 12 }} />
+          <div style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.25 }}>Supervisión Bancos de Sangre Tipo II</div>
+          <div style={{ fontSize: 11.5, fontWeight: 600, color: 'oklch(52% 0.19 25)', letterSpacing: '.03em', marginTop: 2 }}>DIBAN · DIGDOT · MINSA</div>
+        </div>
+        <button onClick={onClose} aria-label="Cerrar menú" className="bs2-sidebar-close" style={{ display: 'none', background: 'none', border: '1px solid oklch(88% 0.006 90)', borderRadius: 8, fontSize: 16, padding: '4px 9px', cursor: 'pointer', flexShrink: 0 }}>✕</button>
       </div>
 
       <div style={{ padding: '14px 14px 6px' }}>
-        <button onClick={goHeader} style={navButtonStyle(view === 'header')}>
+        <button onClick={handleGoHeader} style={navButtonStyle(view === 'header')}>
           <span style={{ fontSize: 13.5 }}>📋 Datos generales</span>
         </button>
       </div>
@@ -32,7 +42,7 @@ export default function Sidebar({ sections, sectionStats, view, activeSectionId,
       <div style={{ flex: 1, overflowY: 'auto', padding: '2px 14px 14px', display: 'flex', flexDirection: 'column', gap: 4 }}>
         <div style={{ fontSize: 10.5, fontWeight: 700, color: 'oklch(55% 0.01 30)', letterSpacing: '.08em', textTransform: 'uppercase', margin: '10px 6px 2px' }}>Secciones de verificación</div>
         {navSections.map(({ sec, st, active, pct }) => (
-          <button key={sec.id} onClick={() => goSection(sec.id)} style={navButtonStyle(active)}>
+          <button key={sec.id} onClick={() => handleGoSection(sec.id)} style={navButtonStyle(active)}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
               <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, minWidth: 0 }}>
                 <span style={{ fontSize: 11, fontWeight: 800, opacity: .6, flexShrink: 0 }}>{sec.id}</span>
@@ -56,9 +66,9 @@ export default function Sidebar({ sections, sectionStats, view, activeSectionId,
         <div style={{ height: 6, borderRadius: 6, background: 'oklch(92% 0.006 90)', overflow: 'hidden' }}>
           <div style={{ height: '100%', width: overallPct + '%', background: 'oklch(52% 0.19 25)', borderRadius: 6 }} />
         </div>
-        <button onClick={goActa} style={actaButtonStyle}>🗎 Generar Acta de Supervisión</button>
-        <button onClick={goHistorial} style={{ background: 'none', border: 'none', color: 'oklch(45% 0.01 30)', fontSize: 12, fontWeight: 600, cursor: 'pointer', padding: '4px 0', textAlign: 'left' }}>📁 Historial ({historyCount})</button>
-        <button onClick={newSupervision} style={{ background: 'none', border: 'none', color: 'oklch(50% 0.01 30)', fontSize: 11.5, cursor: 'pointer', padding: 0, textAlign: 'left', textDecoration: 'underline' }}>Nueva supervisión (limpiar)</button>
+        <button onClick={handleGoActa} style={actaButtonStyle}>🗎 Generar Acta de Supervisión</button>
+        <button onClick={handleGoHistorial} style={{ background: 'none', border: 'none', color: 'oklch(45% 0.01 30)', fontSize: 12, fontWeight: 600, cursor: 'pointer', padding: '4px 0', textAlign: 'left' }}>📁 Historial ({historyCount})</button>
+        <button onClick={handleNewSupervision} style={{ background: 'none', border: 'none', color: 'oklch(50% 0.01 30)', fontSize: 11.5, cursor: 'pointer', padding: 0, textAlign: 'left', textDecoration: 'underline' }}>Nueva supervisión (limpiar)</button>
         <div style={{ fontSize: 10.5, color: 'oklch(65% 0.01 30)' }}>Guardado automáticamente en este navegador</div>
       </div>
     </div>

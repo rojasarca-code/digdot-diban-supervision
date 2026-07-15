@@ -12,7 +12,7 @@ export default function ChecklistView({ section, stats, answers, handlers, goPre
         {stats.answered} de {stats.total} ítems evaluados · {stats.obsCount} observaciones
       </div>
 
-      <div style={{ background: '#fff', border: '1px solid oklch(90% 0.006 90)', borderRadius: 14, padding: '8px 24px' }}>
+      <div className="bs2-card" style={{ background: '#fff', border: '1px solid oklch(90% 0.006 90)', borderRadius: 14, padding: '8px 24px' }}>
         {section.subs.map((sub, subIdx) => (
           <div key={subIdx}>
             <div style={{ marginTop: 22, marginBottom: 6 }}>

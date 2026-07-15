@@ -12,9 +12,9 @@ function BoolItem({ item, answer, onSetAnswer, onObsField }) {
   const showObs = status === 'no';
   return (
     <>
-      <div style={rowStyle}>
+      <div className="bs2-row" style={rowStyle}>
         <div style={labelTextStyle}>{item.label}</div>
-        <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
+        <div className="bs2-row-controls bs2-boolbtns" style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
           <button onClick={() => onSetAnswer(item.id, 'si')} style={answerButtonStyle('si', status === 'si')}>Sí</button>
           <button onClick={() => onSetAnswer(item.id, 'no')} style={answerButtonStyle('no', status === 'no')}>No</button>
         </div>
@@ -46,30 +46,30 @@ function BoolItem({ item, answer, onSetAnswer, onObsField }) {
 
 function IntItem({ item, answer, onSetValue }) {
   return (
-    <div style={rowStyle}>
+    <div className="bs2-row" style={rowStyle}>
       <div style={labelTextStyle}>{item.label}</div>
       <input type="number" min="0" step="1" inputMode="numeric" value={answer.value || ''}
         onChange={e => onSetValue(item.id, e.target.value.replace(/[^0-9]/g, ''))}
-        placeholder="0" style={numberInputStyle} />
+        placeholder="0" className="bs2-input" style={numberInputStyle} />
     </div>
   );
 }
 
 function TextItem({ item, answer, onSetValue }) {
   return (
-    <div style={rowStyle}>
+    <div className="bs2-row" style={rowStyle}>
       <div style={labelTextStyle}>{item.label}</div>
       <input type="text" value={answer.value || ''} onChange={e => onSetValue(item.id, e.target.value)}
-        placeholder="Completar…" style={textInputStyle} />
+        placeholder="Completar…" className="bs2-input" style={textInputStyle} />
     </div>
   );
 }
 
 function TimerangeItem({ item, answer, onSetRangeField }) {
   return (
-    <div style={rowStyle}>
+    <div className="bs2-row" style={rowStyle}>
       <div style={labelTextStyle}>{item.label}</div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+      <div className="bs2-row-controls" style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
         <input type="time" value={answer.from || ''} onChange={e => onSetRangeField(item.id, 'from', e.target.value)} style={timeInputStyle} />
         <span style={{ fontSize: 12.5, color: 'oklch(55% 0.01 30)' }}>hasta</span>
         <input type="time" value={answer.to || ''} onChange={e => onSetRangeField(item.id, 'to', e.target.value)} style={timeInputStyle} />
@@ -80,9 +80,9 @@ function TimerangeItem({ item, answer, onSetRangeField }) {
 
 function PercentItem({ item, answer, onSetPercent }) {
   return (
-    <div style={rowStyle}>
+    <div className="bs2-row" style={rowStyle}>
       <div style={labelTextStyle}>{item.label}</div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+      <div className="bs2-row-controls" style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
         <input type="number" min="0" max="100" step="1" inputMode="numeric" value={answer.value || ''}
           onChange={e => onSetPercent(item.id, e.target.value)}
           placeholder="0" style={{ width: 80, border: '1px solid oklch(85% 0.006 90)', borderRadius: 8, padding: '8px 10px', fontSize: 14, fontFamily: 'Manrope,sans-serif', textAlign: 'right' }} />
@@ -94,14 +94,14 @@ function PercentItem({ item, answer, onSetPercent }) {
 
 function IntTextItem({ item, answer, onSetIntTextField }) {
   return (
-    <div style={rowStyle}>
+    <div className="bs2-row" style={rowStyle}>
       <div style={labelTextStyle}>{item.label}</div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+      <div className="bs2-row-controls" style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
         <input type="number" min="0" step="1" inputMode="numeric" value={answer.cant || ''}
           onChange={e => onSetIntTextField(item.id, 'cant', e.target.value.replace(/[^0-9]/g, ''))}
           placeholder="Cant." style={{ width: 80, border: '1px solid oklch(85% 0.006 90)', borderRadius: 8, padding: '8px 10px', fontSize: 14, fontFamily: 'Manrope,sans-serif', textAlign: 'right' }} />
         <input type="text" value={answer.prof || ''} onChange={e => onSetIntTextField(item.id, 'prof', e.target.value)}
-          placeholder="Profesión" style={{ width: 180, border: '1px solid oklch(85% 0.006 90)', borderRadius: 8, padding: '8px 10px', fontSize: 14, fontFamily: 'Manrope,sans-serif' }} />
+          placeholder="Profesión" style={{ flex: 1, minWidth: 0, border: '1px solid oklch(85% 0.006 90)', borderRadius: 8, padding: '8px 10px', fontSize: 14, fontFamily: 'Manrope,sans-serif' }} />
       </div>
     </div>
   );
@@ -115,9 +115,9 @@ function InstitutionListItem({ item, answer, onSetInstRow, onAddInstRow, onRemov
       <div style={{ fontSize: 14.5, lineHeight: 1.35, marginBottom: 10 }}>{item.label}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {rows.map((row, idx) => (
-          <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div key={idx} className="bs2-inst-row" style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             <input type="text" value={row.institucion || ''} onChange={e => onSetInstRow(item.id, idx, 'institucion', e.target.value)}
-              placeholder="Institución" style={{ flex: 1, border: '1px solid oklch(85% 0.006 90)', borderRadius: 8, padding: '8px 10px', fontSize: 13.5, fontFamily: 'Manrope,sans-serif' }} />
+              placeholder="Institución" style={{ flex: '1 1 160px', minWidth: 0, border: '1px solid oklch(85% 0.006 90)', borderRadius: 8, padding: '8px 10px', fontSize: 13.5, fontFamily: 'Manrope,sans-serif' }} />
             <input type="date" value={row.fecha || ''} onChange={e => onSetInstRow(item.id, idx, 'fecha', e.target.value)}
               style={{ border: '1px solid oklch(85% 0.006 90)', borderRadius: 8, padding: '8px 10px', fontSize: 13.5, fontFamily: 'Manrope,sans-serif' }} />
             <button onClick={() => onRemoveInstRow(item.id, idx)} style={{ background: 'none', border: 'none', color: 'oklch(55% 0.15 25)', fontSize: 16, cursor: 'pointer', padding: '4px 8px' }}>✕</button>
