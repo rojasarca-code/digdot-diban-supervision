@@ -1,0 +1,37 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d8cfc9;
+  border-radius: 8px;
+}
+
+@media print {
+  #bs2-sidebar, #bs2-topbar-actions {
+    display: none !important;
+  }
+  #bs2-main {
+    overflow: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+  #bs2-root {
+    display: block !important;
+    height: auto !important;
+  }
+}
