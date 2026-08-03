@@ -12,7 +12,7 @@ export default function App() {
     setHeaderField, setAnswer, setObsField, setValue, setRangeField, setPercent, setIntTextField,
     setInstRow, addInstRow, removeInstRow,
     goSection, goHeader, goHistorial, goActa, goRelativeSection, newSupervision,
-    printActa, saveActaToHistory, loadFromHistory, deleteFromHistory,
+    printActa, exportActaExcel, saveActaToHistory, loadFromHistory, deleteFromHistory,
     sectionStats, buildActa
   } = useSupervision();
 
@@ -85,6 +85,7 @@ export default function App() {
               goHeader={goHeader}
               saveActaToHistory={saveActaToHistory}
               printActa={printActa}
+              exportActaExcel={exportActaExcel}
             />
           )}
 

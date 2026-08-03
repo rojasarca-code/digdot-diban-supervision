@@ -1,12 +1,13 @@
 import logo from '../assets/minsa-logo.png';
 import { secNavButtonStyle, actaButtonStyleInline } from '../lib/styles.js';
 
-export default function ActaView({ acta, goHeader, saveActaToHistory, printActa }) {
+export default function ActaView({ acta, goHeader, saveActaToHistory, printActa, exportActaExcel }) {
   return (
     <div>
       <div id="bs2-topbar-actions" style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginBottom: 16 }}>
         <button onClick={goHeader} style={secNavButtonStyle}>← Volver a editar</button>
         <button onClick={saveActaToHistory} style={secNavButtonStyle}>💾 Guardar en historial</button>
+        <button onClick={exportActaExcel} style={secNavButtonStyle}>📊 Exportar Excel (base de datos)</button>
         <button onClick={printActa} style={actaButtonStyleInline}>🖨 Imprimir / Exportar PDF</button>
       </div>
 
