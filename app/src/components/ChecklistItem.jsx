@@ -20,8 +20,8 @@ function BoolItem({ item, answer, onSetAnswer, onObsField }) {
         </div>
       </div>
       {showObs && (
-        <div style={{ marginTop: 10, background: 'oklch(97% 0.02 25)', border: '1px solid oklch(90% 0.05 25)', borderRadius: 10, padding: 14 }}>
-          <div style={{ fontSize: 11.5, fontWeight: 700, color: 'oklch(45% 0.15 25)', marginBottom: 6 }}>OBSERVACIÓN / HALLAZGO</div>
+        <div style={{ marginTop: 10, background: 'oklch(95% 0 0)', border: '1px solid oklch(80% 0 0)', borderRadius: 10, padding: 14 }}>
+          <div style={{ fontSize: 11.5, fontWeight: 700, color: '#000', marginBottom: 6 }}>OBSERVACIÓN / HALLAZGO</div>
           <textarea
             value={answer.text || ''}
             onChange={e => onObsField(item.id, 'text', e.target.value)}
@@ -120,12 +120,12 @@ function InstitutionListItem({ item, answer, onSetInstRow, onAddInstRow, onRemov
               placeholder="Institución" style={{ flex: '1 1 160px', minWidth: 0, border: '1px solid oklch(85% 0.006 90)', borderRadius: 8, padding: '8px 10px', fontSize: 13.5, fontFamily: 'Manrope,sans-serif' }} />
             <input type="date" value={row.fecha || ''} onChange={e => onSetInstRow(item.id, idx, 'fecha', e.target.value)}
               style={{ border: '1px solid oklch(85% 0.006 90)', borderRadius: 8, padding: '8px 10px', fontSize: 13.5, fontFamily: 'Manrope,sans-serif' }} />
-            <button onClick={() => onRemoveInstRow(item.id, idx)} style={{ background: 'none', border: 'none', color: 'oklch(55% 0.15 25)', fontSize: 16, cursor: 'pointer', padding: '4px 8px' }}>✕</button>
+            <button onClick={() => onRemoveInstRow(item.id, idx)} style={{ background: 'none', border: 'none', color: '#000', fontSize: 16, cursor: 'pointer', padding: '4px 8px' }}>✕</button>
           </div>
         ))}
       </div>
       {canAdd && (
-        <button onClick={() => onAddInstRow(item.id, item.max)} style={{ marginTop: 8, background: 'oklch(96% 0.03 25)', border: '1px solid oklch(88% 0.06 25)', color: 'oklch(45% 0.15 25)', borderRadius: 8, padding: '6px 14px', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'Manrope,sans-serif' }}>+ Agregar institución</button>
+        <button onClick={() => onAddInstRow(item.id, item.max)} style={{ marginTop: 8, background: 'oklch(95% 0 0)', border: '1px solid oklch(78% 0 0)', color: '#000', borderRadius: 8, padding: '6px 14px', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'Manrope,sans-serif' }}>+ Agregar institución</button>
       )}
     </div>
   );

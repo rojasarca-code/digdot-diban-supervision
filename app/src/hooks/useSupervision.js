@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SECTIONS } from '../data/checklistData.js';
-import { DRAFT_KEY, HISTORY_KEY, emptyHeader } from '../lib/constants.js';
+import { DRAFT_KEY, HISTORY_KEY, emptyHeader, DISABLED_SECTIONS_IF_RESTRICTED, isRestrictedClasif } from '../lib/constants.js';
 import { computeActa } from '../lib/acta.js';
 import { buildFileNameBase, exportActaExcel as exportActaExcelFile } from '../lib/exportExcel.js';
 
@@ -44,6 +44,17 @@ export function useSupervision() {
 
   const setHeaderField = useCallback((key, value) => {
     setHeader(prev => ({ ...prev, [key]: value }));
+  }, []);
+
+  const setClasificacionBS = useCallback((value) => {
+    setHeader(prev => ({ ...prev, clasificacionBS: value }));
+    setActiveSectionId(prevId => {
+      if (isRestrictedClasif(value) && DISABLED_SECTIONS_IF_RESTRICTED.includes(prevId)) {
+        const fallback = SECTIONS.find(sec => !DISABLED_SECTIONS_IF_RESTRICTED.includes(sec.id));
+        return fallback ? fallback.id : prevId;
+      }
+      return prevId;
+    });
   }, []);
 
   const updateAnswers = useCallback((updater) => {
@@ -114,12 +125,15 @@ export function useSupervision() {
   const goActa = useCallback(() => { setActaSnapshot({ generatedAt: Date.now() }); setView('acta'); }, []);
 
   const goRelativeSection = useCallback((delta) => {
-    const idx = SECTIONS.findIndex(s => s.id === activeSectionId);
-    const nextIdx = idx + delta;
+    const restricted = isRestrictedClasif(header.clasificacionBS);
+    let nextIdx = SECTIONS.findIndex(s => s.id === activeSectionId) + delta;
+    while (nextIdx >= 0 && nextIdx < SECTIONS.length && restricted && DISABLED_SECTIONS_IF_RESTRICTED.includes(SECTIONS[nextIdx].id)) {
+      nextIdx += delta;
+    }
     if (nextIdx < 0) { goHeader(); return; }
     if (nextIdx >= SECTIONS.length) { goActa(); return; }
     goSection(SECTIONS[nextIdx].id);
-  }, [activeSectionId, goHeader, goActa, goSection]);
+  }, [activeSectionId, header.clasificacionBS, goHeader, goActa, goSection]);
 
   const newSupervision = useCallback(() => {
     if (!window.confirm('¿Limpiar todos los datos de esta supervisión? Esta acción no se puede deshacer (el historial guardado no se borra).')) return;
@@ -198,7 +212,7 @@ export function useSupervision() {
 
   return {
     sections: SECTIONS, header, answers, view, activeSectionId, history,
-    setHeaderField, setAnswer, setObsField, setValue, setRangeField, setPercent, setIntTextField,
+    setHeaderField, setClasificacionBS, setAnswer, setObsField, setValue, setRangeField, setPercent, setIntTextField,
     setInstRow, addInstRow, removeInstRow,
     goSection, goHeader, goHistorial, goActa, goRelativeSection, newSupervision,
     printActa, exportActaExcel, saveActaToHistory, loadFromHistory, deleteFromHistory,

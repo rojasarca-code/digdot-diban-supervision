@@ -9,7 +9,7 @@ import HistorialView from './components/HistorialView.jsx';
 export default function App() {
   const {
     sections, header, answers, view, activeSectionId, history,
-    setHeaderField, setAnswer, setObsField, setValue, setRangeField, setPercent, setIntTextField,
+    setHeaderField, setClasificacionBS, setAnswer, setObsField, setValue, setRangeField, setPercent, setIntTextField,
     setInstRow, addInstRow, removeInstRow,
     goSection, goHeader, goHistorial, goActa, goRelativeSection, newSupervision,
     printActa, exportActaExcel, saveActaToHistory, loadFromHistory, deleteFromHistory,
@@ -52,6 +52,7 @@ export default function App() {
         sectionStats={sectionStats}
         view={view}
         activeSectionId={activeSectionId}
+        header={header}
         goHeader={goHeader}
         goSection={goSection}
         goActa={goActa}
@@ -65,7 +66,7 @@ export default function App() {
       <div id="bs2-main" style={{ flex: 1, overflowY: 'auto', padding: '32px 40px 60px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           {view === 'header' && (
-            <HeaderForm header={header} setHeaderField={setHeaderField} />
+            <HeaderForm header={header} setHeaderField={setHeaderField} setClasificacionBS={setClasificacionBS} />
           )}
 
           {view === 'checklist' && activeSection && (
@@ -74,6 +75,7 @@ export default function App() {
               stats={sectionStats(activeSection)}
               answers={answers}
               handlers={itemHandlers}
+              header={header}
               goPrevSection={() => goRelativeSection(-1)}
               goNextSection={() => goRelativeSection(1)}
             />

@@ -12,7 +12,7 @@ export default function ActaView({ acta, goHeader, saveActaToHistory, printActa,
       </div>
 
       <div className="bs2-acta-card" style={{ background: '#fff', border: '1px solid oklch(90% 0.006 90)', borderRadius: 14, padding: '44px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '3px solid oklch(52% 0.19 25)', paddingBottom: 16, marginBottom: 24 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '3px solid #000', paddingBottom: 16, marginBottom: 24 }}>
           <img src={logo} alt="MINSA Perú" style={{ height: 34, objectFit: 'contain' }} />
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: 20, fontWeight: 800 }}>ACTA DE SUPERVISIÓN</div>
@@ -40,12 +40,12 @@ export default function ActaView({ acta, goHeader, saveActaToHistory, printActa,
             <div style={{ fontSize: 22, fontWeight: 800 }}>{acta.totalItems}</div>
             <div style={{ fontSize: 11.5, color: 'oklch(50% 0.01 30)' }}>Ítems evaluados</div>
           </div>
-          <div style={{ flex: 1, background: 'oklch(97% 0.05 150)', borderRadius: 10, padding: 14, textAlign: 'center' }}>
-            <div style={{ fontSize: 22, fontWeight: 800, color: 'oklch(45% 0.14 150)' }}>{acta.pctCumplimiento}%</div>
+          <div style={{ flex: 1, background: 'oklch(95% 0 0)', borderRadius: 10, padding: 14, textAlign: 'center' }}>
+            <div style={{ fontSize: 22, fontWeight: 800, color: '#000' }}>{acta.pctCumplimiento}%</div>
             <div style={{ fontSize: 11.5, color: 'oklch(50% 0.01 30)' }}>% Cumplimiento</div>
           </div>
-          <div style={{ flex: 1, background: 'oklch(96% 0.03 25)', borderRadius: 10, padding: 14, textAlign: 'center' }}>
-            <div style={{ fontSize: 22, fontWeight: 800, color: 'oklch(45% 0.15 25)' }}>{acta.obsCount}</div>
+          <div style={{ flex: 1, background: 'oklch(95% 0 0)', borderRadius: 10, padding: 14, textAlign: 'center' }}>
+            <div style={{ fontSize: 22, fontWeight: 800, color: '#000' }}>{acta.obsCount}</div>
             <div style={{ fontSize: 11.5, color: 'oklch(50% 0.01 30)' }}>Observaciones</div>
           </div>
         </div>
@@ -55,11 +55,11 @@ export default function ActaView({ acta, goHeader, saveActaToHistory, printActa,
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 8 }}>
             {acta.observations.map((obs, idx) => (
               <div key={idx} style={{ border: '1px solid oklch(90% 0.006 90)', borderRadius: 10, padding: '14px 16px' }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: 'oklch(52% 0.19 25)', textTransform: 'uppercase', letterSpacing: '.03em', marginBottom: 4 }}>{obs.sectionLabel} · {obs.subTitle}</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#000', textTransform: 'uppercase', letterSpacing: '.03em', marginBottom: 4 }}>{obs.sectionLabel} · {obs.subTitle}</div>
                 <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 6 }}>{obs.label}</div>
                 <div style={{ fontSize: 13.5, color: '#333', marginBottom: 8, whiteSpace: 'pre-wrap' }}>{obs.text}</div>
                 <div style={{ display: 'flex', gap: 8 }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, background: 'oklch(94% 0.02 25)', color: 'oklch(40% 0.1 25)', borderRadius: 6, padding: '3px 9px' }}>{obs.clasif}</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, background: 'oklch(90% 0 0)', color: '#000', borderRadius: 6, padding: '3px 9px' }}>{obs.clasif}</span>
                   <span style={obs.nivelBadgeStyle}>{obs.nivel}</span>
                 </div>
               </div>
