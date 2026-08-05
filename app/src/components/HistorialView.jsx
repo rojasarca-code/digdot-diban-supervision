@@ -15,7 +15,7 @@ export default function HistorialView({ history, loadFromHistory, deleteFromHist
               </div>
               <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>
                 <button onClick={() => loadFromHistory(h)} style={secNavButtonStyle}>Ver</button>
-                <button onClick={() => deleteFromHistory(h.id)} style={{ border: '1px solid oklch(85% 0.05 25)', background: '#fff', color: 'oklch(45% 0.15 25)', borderRadius: 8, padding: '7px 12px', fontSize: 12.5, fontWeight: 600, cursor: 'pointer' }}>Eliminar</button>
+                <button onClick={() => deleteFromHistory(h.id)} style={{ border: '1px solid oklch(75% 0 0)', background: '#fff', color: '#000', borderRadius: 8, padding: '7px 12px', fontSize: 12.5, fontWeight: 600, cursor: 'pointer' }}>Eliminar</button>
               </div>
             </div>
           ))}

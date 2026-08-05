@@ -21,7 +21,7 @@ function SelectField({ label, value, onChange, options }) {
   );
 }
 
-export default function HeaderForm({ header, setHeaderField }) {
+export default function HeaderForm({ header, setHeaderField, setClasificacionBS }) {
   const set = (key) => (e) => setHeaderField(key, e.target.value);
 
   return (
@@ -41,7 +41,7 @@ export default function HeaderForm({ header, setHeaderField }) {
         </Field>
         <SelectField label="Categoría de la IPRESS" value={header.categoriaIpress} onChange={set('categoriaIpress')} options={CATEGORIA_IPRESS} />
         <SelectField label="Institución (sector)" value={header.institucionSector} onChange={set('institucionSector')} options={INSTITUCION_SECTOR} />
-        <SelectField label="Clasificación de banco de sangre" value={header.clasificacionBS} onChange={set('clasificacionBS')} options={CLASIFICACION_BS} />
+        <SelectField label="Clasificación de banco de sangre" value={header.clasificacionBS} onChange={e => setClasificacionBS(e.target.value)} options={CLASIFICACION_BS} />
 
         <div style={{ gridColumn: '1/-1', height: 1, background: 'oklch(92% 0.006 90)', margin: '4px 0' }} />
 
@@ -64,7 +64,7 @@ export default function HeaderForm({ header, setHeaderField }) {
         </Field>
       </div>
 
-      <div className="bs2-card" style={{ marginTop: 24, padding: '18px 20px', background: 'oklch(96% 0.03 25)', border: '1px solid oklch(88% 0.06 25)', borderRadius: 12, fontSize: 13, color: 'oklch(35% 0.1 25)' }}>
+      <div className="bs2-card" style={{ marginTop: 24, padding: '18px 20px', background: 'oklch(95% 0 0)', border: '1px solid oklch(78% 0 0)', borderRadius: 12, fontSize: 13, color: '#000' }}>
         Completa estos datos y luego recorre las secciones I–XIV del panel izquierdo marcando cada ítem como <b>Sí</b> o <b>No</b>. Cuando termines, usa <b>«Generar Acta de Supervisión»</b> para producir el documento final.
       </div>
     </div>

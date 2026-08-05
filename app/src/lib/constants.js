@@ -1,6 +1,9 @@
 export const CATEGORIA_IPRESS = ['I-1', 'I-2', 'I-3', 'I-4', 'II-1', 'II-2', 'III-1', 'III-2'];
 export const INSTITUCION_SECTOR = ['MINSA', 'ESSALUD', 'PRIVADO', 'FFAA', 'PNP', 'OTROS'];
-export const CLASIFICACION_BS = ['IA', 'IB', 'IIA', 'IIB'];
+export const CLASIFICACION_BS = ['IA', 'IB', 'IC', 'II'];
+export const RESTRICTED_CLASIF = ['IA', 'IB', 'IC'];
+export const DISABLED_SECTIONS_IF_RESTRICTED = ['V', 'VI', 'VII', 'VIII'];
+export const isRestrictedClasif = c => RESTRICTED_CLASIF.includes(c);
 export const TIPO_SUPERVISION = ['INICIAL', 'SEGUIMIENTO', 'POST-SUBSANACIÓN', 'INOPINADA'];
 export const MODALIDAD = ['PRESENCIAL', 'VIRTUAL', 'MIXTA'];
 export const CLASIF_OBS = ['TIPO 1', 'TIPO 2', 'TIPO 3'];
