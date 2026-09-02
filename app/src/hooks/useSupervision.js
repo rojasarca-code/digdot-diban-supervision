@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { SECTIONS } from '../data/checklistData.js';
-import { DRAFT_KEY, HISTORY_KEY, emptyHeader, DISABLED_SECTIONS_IF_RESTRICTED, isRestrictedClasif } from '../lib/constants.js';
+import { DRAFT_KEY, HISTORY_KEY, emptyHeader } from '../lib/constants.js';
+import { resolveGuide } from '../lib/guides.js';
 import { computeActa } from '../lib/acta.js';
 import { buildFileNameBase, exportActaExcel as exportActaExcelFile } from '../lib/exportExcel.js';
 
@@ -34,7 +34,10 @@ export function useSupervision() {
   const [header, setHeader] = useState(() => (draft && draft.header) ? { ...emptyHeader(), ...draft.header } : emptyHeader());
   const [answers, setAnswers] = useState(() => (draft && draft.answers) ? draft.answers : {});
   const [view, setView] = useState('header');
-  const [activeSectionId, setActiveSectionId] = useState(SECTIONS[0].id);
+
+  const sections = useMemo(() => resolveGuide(header.clasificacionBS), [header.clasificacionBS]);
+
+  const [activeSectionId, setActiveSectionId] = useState(() => sections[0].id);
   const [actaSnapshot, setActaSnapshot] = useState(null);
   const [history, setHistory] = useState(loadHistory);
 
@@ -42,19 +45,20 @@ export function useSupervision() {
     saveDraft(header, answers);
   }, [header, answers]);
 
+  // Al cambiar la guía (por clasificación), si la sección activa ya no existe
+  // en la nueva guía, volver a la primera sección disponible.
+  useEffect(() => {
+    if (!sections.some(sec => sec.id === activeSectionId)) {
+      setActiveSectionId(sections[0].id);
+    }
+  }, [sections, activeSectionId]);
+
   const setHeaderField = useCallback((key, value) => {
     setHeader(prev => ({ ...prev, [key]: value }));
   }, []);
 
   const setClasificacionBS = useCallback((value) => {
     setHeader(prev => ({ ...prev, clasificacionBS: value }));
-    setActiveSectionId(prevId => {
-      if (isRestrictedClasif(value) && DISABLED_SECTIONS_IF_RESTRICTED.includes(prevId)) {
-        const fallback = SECTIONS.find(sec => !DISABLED_SECTIONS_IF_RESTRICTED.includes(sec.id));
-        return fallback ? fallback.id : prevId;
-      }
-      return prevId;
-    });
   }, []);
 
   const updateAnswers = useCallback((updater) => {
@@ -125,15 +129,11 @@ export function useSupervision() {
   const goActa = useCallback(() => { setActaSnapshot({ generatedAt: Date.now() }); setView('acta'); }, []);
 
   const goRelativeSection = useCallback((delta) => {
-    const restricted = isRestrictedClasif(header.clasificacionBS);
-    let nextIdx = SECTIONS.findIndex(s => s.id === activeSectionId) + delta;
-    while (nextIdx >= 0 && nextIdx < SECTIONS.length && restricted && DISABLED_SECTIONS_IF_RESTRICTED.includes(SECTIONS[nextIdx].id)) {
-      nextIdx += delta;
-    }
+    const nextIdx = sections.findIndex(s => s.id === activeSectionId) + delta;
     if (nextIdx < 0) { goHeader(); return; }
-    if (nextIdx >= SECTIONS.length) { goActa(); return; }
-    goSection(SECTIONS[nextIdx].id);
-  }, [activeSectionId, header.clasificacionBS, goHeader, goActa, goSection]);
+    if (nextIdx >= sections.length) { goActa(); return; }
+    goSection(sections[nextIdx].id);
+  }, [activeSectionId, sections, goHeader, goActa, goSection]);
 
   const newSupervision = useCallback(() => {
     if (!window.confirm('¿Limpiar todos los datos de esta supervisión? Esta acción no se puede deshacer (el historial guardado no se borra).')) return;
@@ -141,13 +141,13 @@ export function useSupervision() {
     setHeader(emptyHeader());
     setAnswers({});
     setView('header');
-    setActiveSectionId(SECTIONS[0].id);
+    setActiveSectionId(resolveGuide('')[0].id);
     setActaSnapshot(null);
   }, []);
 
   const buildActa = useCallback(() => (
-    computeActa(SECTIONS, header, answers, actaSnapshot && actaSnapshot.generatedAt)
-  ), [answers, header, actaSnapshot]);
+    computeActa(sections, header, answers, actaSnapshot && actaSnapshot.generatedAt)
+  ), [sections, answers, header, actaSnapshot]);
 
   const printActa = useCallback(() => {
     const prevTitle = document.title;
@@ -157,8 +157,8 @@ export function useSupervision() {
   }, [header, buildActa]);
 
   const exportActaExcel = useCallback(() => {
-    exportActaExcelFile({ sections: SECTIONS, header, answers, history });
-  }, [header, answers, history]);
+    exportActaExcelFile({ sections, header, answers, history });
+  }, [sections, header, answers, history]);
 
   const sectionStats = useCallback((section) => {
     let answered = 0, obsCount = 0, total = 0;
@@ -211,7 +211,7 @@ export function useSupervision() {
   }, []);
 
   return {
-    sections: SECTIONS, header, answers, view, activeSectionId, history,
+    sections, header, answers, view, activeSectionId, history,
     setHeaderField, setClasificacionBS, setAnswer, setObsField, setValue, setRangeField, setPercent, setIntTextField,
     setInstRow, addInstRow, removeInstRow,
     goSection, goHeader, goHistorial, goActa, goRelativeSection, newSupervision,

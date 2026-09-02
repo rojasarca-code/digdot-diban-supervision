@@ -1,10 +1,8 @@
 import logo from '../assets/minsa-logo.png';
 import { navButtonStyle, actaButtonStyle } from '../lib/styles.js';
-import { DISABLED_SECTIONS_IF_RESTRICTED, isRestrictedClasif } from '../lib/constants.js';
 
-export default function Sidebar({ sections, sectionStats, view, activeSectionId, header, goHeader, goSection, goActa, goHistorial, newSupervision, historyCount, open, onClose }) {
+export default function Sidebar({ sections, sectionStats, view, activeSectionId, guiaLabel, goHeader, goSection, goActa, goHistorial, newSupervision, historyCount, open, onClose }) {
   let overallAnswered = 0, overallTotal = 0;
-  const restricted = isRestrictedClasif(header.clasificacionBS);
 
   const withClose = (fn) => (...args) => { fn(...args); if (onClose) onClose(); };
   const handleGoHeader = withClose(goHeader);
@@ -15,14 +13,11 @@ export default function Sidebar({ sections, sectionStats, view, activeSectionId,
 
   const navSections = sections.map(sec => {
     const st = sectionStats(sec);
-    const disabled = restricted && DISABLED_SECTIONS_IF_RESTRICTED.includes(sec.id);
-    if (!disabled) {
-      overallAnswered += st.answered;
-      overallTotal += st.total;
-    }
+    overallAnswered += st.answered;
+    overallTotal += st.total;
     const active = view === 'checklist' && sec.id === activeSectionId;
     const pct = st.total ? Math.round((st.answered / st.total) * 100) : 0;
-    return { sec, st, active, pct, disabled };
+    return { sec, st, active, pct };
   });
 
   const overallPct = overallTotal ? Math.round((overallAnswered / overallTotal) * 100) : 0;
@@ -32,8 +27,9 @@ export default function Sidebar({ sections, sectionStats, view, activeSectionId,
       <div className="bs2-sb-header" style={{ padding: '20px 20px 16px', borderBottom: '1px solid oklch(90% 0.006 90)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
         <div>
           <img src={logo} alt="MINSA Perú" className="bs2-sb-logo" style={{ height: 30, objectFit: 'contain', display: 'block', marginBottom: 12 }} />
-          <div className="bs2-sb-title" style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.25 }}>Supervisión Bancos de Sangre Tipo II</div>
+          <div className="bs2-sb-title" style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.25 }}>Supervisión Bancos de Sangre</div>
           <div style={{ fontSize: 11.5, fontWeight: 600, color: '#000', letterSpacing: '.03em', marginTop: 2 }}>DIBAN · DIGDOT · MINSA</div>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#fff', background: '#000', borderRadius: 5, padding: '2px 8px', marginTop: 8, display: 'inline-block' }}>Guía: {guiaLabel}</div>
         </div>
         <button onClick={onClose} aria-label="Cerrar menú" className="bs2-sidebar-close" style={{ display: 'none', background: 'none', border: '1px solid oklch(88% 0.006 90)', borderRadius: 8, fontSize: 16, padding: '4px 9px', cursor: 'pointer', flexShrink: 0 }}>✕</button>
       </div>
@@ -46,16 +42,13 @@ export default function Sidebar({ sections, sectionStats, view, activeSectionId,
 
       <div className="bs2-sb-navlist" style={{ flex: 1, overflowY: 'auto', padding: '2px 14px 14px', display: 'flex', flexDirection: 'column', gap: 4 }}>
         <div style={{ fontSize: 10.5, fontWeight: 700, color: 'oklch(55% 0.01 30)', letterSpacing: '.08em', textTransform: 'uppercase', margin: '10px 6px 2px' }}>Secciones de verificación</div>
-        {navSections.map(({ sec, st, active, pct, disabled }) => (
-          <button key={sec.id} onClick={disabled ? undefined : () => handleGoSection(sec.id)} style={navButtonStyle(active, disabled)}>
+        {navSections.map(({ sec, st, active, pct }) => (
+          <button key={sec.id} onClick={() => handleGoSection(sec.id)} style={navButtonStyle(active)}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
               <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, minWidth: 0 }}>
                 <span style={{ fontSize: 11, fontWeight: 800, opacity: .6, flexShrink: 0 }}>{sec.id}</span>
                 <span style={{ fontSize: 12.8, fontWeight: 600, lineHeight: 1.25, textAlign: 'left' }}>{sec.title}</span>
               </span>
-              {disabled && (
-                <span style={{ fontSize: 9.5, fontWeight: 700, color: 'oklch(70% 0 0)', border: '1px solid oklch(80% 0 0)', borderRadius: 5, padding: '1px 5px', flexShrink: 0 }}>N/A</span>
-              )}
               {st.obsCount > 0 && (
                 <span style={{ background: '#000', color: '#fff', fontSize: 10, fontWeight: 800, borderRadius: 20, padding: '1px 6px', flexShrink: 0 }}>{st.obsCount}</span>
               )}

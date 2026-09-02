@@ -5,6 +5,7 @@ import HeaderForm from './components/HeaderForm.jsx';
 import ChecklistView from './components/ChecklistView.jsx';
 import ActaView from './components/ActaView.jsx';
 import HistorialView from './components/HistorialView.jsx';
+import { GUIA_LABEL } from './lib/guides.js';
 
 export default function App() {
   const {
@@ -20,11 +21,13 @@ export default function App() {
 
   const activeSection = view === 'checklist' ? sections.find(s => s.id === activeSectionId) : null;
 
+  const guiaLabel = GUIA_LABEL[header.clasificacionBS] || 'Tipo II';
+
   const mobileTitle = view === 'header' ? 'Datos generales'
     : view === 'checklist' && activeSection ? `${activeSection.id}  ${activeSection.title}`
     : view === 'acta' ? 'Acta de Supervisión'
     : view === 'historial' ? 'Historial'
-    : 'Supervisión Bancos de Sangre Tipo II';
+    : `Supervisión Bancos de Sangre ${guiaLabel}`;
 
   const itemHandlers = {
     onSetAnswer: setAnswer,
@@ -53,6 +56,7 @@ export default function App() {
         view={view}
         activeSectionId={activeSectionId}
         header={header}
+        guiaLabel={guiaLabel}
         goHeader={goHeader}
         goSection={goSection}
         goActa={goActa}
@@ -75,7 +79,6 @@ export default function App() {
               stats={sectionStats(activeSection)}
               answers={answers}
               handlers={itemHandlers}
-              header={header}
               goPrevSection={() => goRelativeSection(-1)}
               goNextSection={() => goRelativeSection(1)}
             />
@@ -84,6 +87,7 @@ export default function App() {
           {view === 'acta' && (
             <ActaView
               acta={buildActa()}
+              guiaLabel={guiaLabel}
               goHeader={goHeader}
               saveActaToHistory={saveActaToHistory}
               printActa={printActa}

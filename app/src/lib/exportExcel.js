@@ -1,4 +1,5 @@
 import { computeActa } from './acta.js';
+import { GUIA_LABEL } from './guides.js';
 
 function escXml(v) {
   return String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
@@ -99,8 +100,9 @@ function buildSectionSheet(sec, records) {
 
 function buildFichaSheet(sections, header, answers) {
   const acta = computeActa(sections, header, answers);
+  const guiaLabel = GUIA_LABEL[header.clasificacionBS] || 'Tipo II';
   let rows = xmlRow([['FICHA DE SUPERVISIÓN', 'header']], 2);
-  rows += xmlRow([['Banco de Sangre Tipo II · DIBAN – DIGDOT – MINSA', 'bold'], '', '']);
+  rows += xmlRow([['Banco de Sangre ' + guiaLabel + ' · DIBAN – DIGDOT – MINSA', 'bold'], '', '']);
   rows += xmlRow([['', '']]);
   metaTitlesAndVals(header, acta).forEach(([k, v]) => { rows += xmlRow([[k, 'bold'], v, '']); });
   rows += xmlRow([['', '']]);

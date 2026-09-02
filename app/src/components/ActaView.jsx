@@ -1,7 +1,7 @@
 import logo from '../assets/minsa-logo.png';
 import { secNavButtonStyle, actaButtonStyleInline } from '../lib/styles.js';
 
-export default function ActaView({ acta, goHeader, saveActaToHistory, printActa, exportActaExcel }) {
+export default function ActaView({ acta, guiaLabel, goHeader, saveActaToHistory, printActa, exportActaExcel }) {
   return (
     <div>
       <div id="bs2-topbar-actions" style={{ display: 'flex', justifyContent: 'flex-end', gap: 10, marginBottom: 16 }}>
@@ -16,7 +16,7 @@ export default function ActaView({ acta, goHeader, saveActaToHistory, printActa,
           <img src={logo} alt="MINSA Perú" style={{ height: 34, objectFit: 'contain' }} />
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontSize: 20, fontWeight: 800 }}>ACTA DE SUPERVISIÓN</div>
-            <div style={{ fontSize: 12.5, color: 'oklch(50% 0.01 30)', fontWeight: 600 }}>Banco de Sangre Tipo II · DIBAN – DIGDOT – MINSA</div>
+            <div style={{ fontSize: 12.5, color: 'oklch(50% 0.01 30)', fontWeight: 600 }}>Banco de Sangre {guiaLabel} · DIBAN – DIGDOT – MINSA</div>
           </div>
         </div>
 

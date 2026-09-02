@@ -1,5 +1,5 @@
 import { labelStyle, inputStyle } from '../lib/styles.js';
-import { CATEGORIA_IPRESS, INSTITUCION_SECTOR, CLASIFICACION_BS, TIPO_SUPERVISION, MODALIDAD } from '../lib/constants.js';
+import { CATEGORIA_IPRESS, INSTITUCION_SECTOR, CLASIFICACION_BS, CLASIFICACION_BS_LABEL, TIPO_SUPERVISION, MODALIDAD } from '../lib/constants.js';
 
 function Field({ label, children }) {
   return (
@@ -10,12 +10,12 @@ function Field({ label, children }) {
   );
 }
 
-function SelectField({ label, value, onChange, options }) {
+function SelectField({ label, value, onChange, options, format }) {
   return (
     <Field label={label}>
       <select value={value} onChange={onChange} style={inputStyle}>
         <option value="">Seleccionar…</option>
-        {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+        {options.map(opt => <option key={opt} value={opt}>{format ? format(opt) : opt}</option>)}
       </select>
     </Field>
   );
@@ -41,7 +41,7 @@ export default function HeaderForm({ header, setHeaderField, setClasificacionBS 
         </Field>
         <SelectField label="Categoría de la IPRESS" value={header.categoriaIpress} onChange={set('categoriaIpress')} options={CATEGORIA_IPRESS} />
         <SelectField label="Institución (sector)" value={header.institucionSector} onChange={set('institucionSector')} options={INSTITUCION_SECTOR} />
-        <SelectField label="Clasificación de banco de sangre" value={header.clasificacionBS} onChange={e => setClasificacionBS(e.target.value)} options={CLASIFICACION_BS} />
+        <SelectField label="Clasificación de banco de sangre" value={header.clasificacionBS} onChange={e => setClasificacionBS(e.target.value)} options={CLASIFICACION_BS} format={opt => CLASIFICACION_BS_LABEL[opt] || opt} />
 
         <div style={{ gridColumn: '1/-1', height: 1, background: 'oklch(92% 0.006 90)', margin: '4px 0' }} />
 
@@ -65,7 +65,11 @@ export default function HeaderForm({ header, setHeaderField, setClasificacionBS 
       </div>
 
       <div className="bs2-card" style={{ marginTop: 24, padding: '18px 20px', background: 'oklch(95% 0 0)', border: '1px solid oklch(78% 0 0)', borderRadius: 12, fontSize: 13, color: '#000' }}>
-        Completa estos datos y luego recorre las secciones I–XIV del panel izquierdo marcando cada ítem como <b>Sí</b> o <b>No</b>. Cuando termines, usa <b>«Generar Acta de Supervisión»</b> para producir el documento final.
+        La <b>clasificación del banco de sangre</b> determina la guía que se aplica:
+        los tipos <b>I-A</b>, <b>I-B</b> y <b>I-C</b> usan la guía de bancos tipo I (secciones I–VIII), activando
+        progresivamente más ítems de I-A a I-C; el tipo <b>II</b> habilita la guía completa (secciones III–XIV).
+        Completa estos datos y luego recorre las secciones del panel izquierdo marcando cada ítem como
+        <b> Sí</b> o <b>No</b>. Al terminar, usa <b>«Generar Acta de Supervisión»</b> para producir el documento final.
       </div>
     </div>
   );
