@@ -1,7 +1,8 @@
 import logo from '../assets/minsa-logo.png';
 import { navButtonStyle, actaButtonStyle } from '../lib/styles.js';
+import ModuleSwitch from './ModuleSwitch.jsx';
 
-export default function Sidebar({ sections, sectionStats, view, activeSectionId, guiaLabel, goHeader, goSection, goActa, goHistorial, newSupervision, historyCount, open, onClose }) {
+export default function Sidebar({ sections, sectionStats, view, activeSectionId, guiaLabel, goHeader, goSection, goActa, goHistorial, newSupervision, historyCount, modulo, setModulo, open, onClose }) {
   let overallAnswered = 0, overallTotal = 0;
 
   const withClose = (fn) => (...args) => { fn(...args); if (onClose) onClose(); };
@@ -25,11 +26,12 @@ export default function Sidebar({ sections, sectionStats, view, activeSectionId,
   return (
     <div id="bs2-sidebar" className={open ? 'bs2-sidebar-open' : ''} style={{ width: 288, flexShrink: 0, background: '#ffffff', borderRight: '1px solid oklch(90% 0.006 90)', display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div className="bs2-sb-header" style={{ padding: '20px 20px 16px', borderBottom: '1px solid oklch(90% 0.006 90)', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
-        <div>
+        <div style={{ flex: 1, minWidth: 0 }}>
           <img src={logo} alt="MINSA Perú" className="bs2-sb-logo" style={{ height: 30, objectFit: 'contain', display: 'block', marginBottom: 12 }} />
           <div className="bs2-sb-title" style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.25 }}>Supervisión Bancos de Sangre</div>
           <div style={{ fontSize: 11.5, fontWeight: 600, color: '#000', letterSpacing: '.03em', marginTop: 2 }}>DIBAN · DIGDOT · MINSA</div>
           <div style={{ fontSize: 11, fontWeight: 700, color: '#fff', background: '#000', borderRadius: 5, padding: '2px 8px', marginTop: 8, display: 'inline-block' }}>Guía: {guiaLabel}</div>
+          <ModuleSwitch modulo={modulo} setModulo={setModulo} />
         </div>
         <button onClick={onClose} aria-label="Cerrar menú" className="bs2-sidebar-close" style={{ display: 'none', background: 'none', border: '1px solid oklch(88% 0.006 90)', borderRadius: 8, fontSize: 16, padding: '4px 9px', cursor: 'pointer', flexShrink: 0 }}>✕</button>
       </div>
