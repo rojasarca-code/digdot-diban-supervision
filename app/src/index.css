@@ -197,3 +197,53 @@ body {
     padding: 8px 16px;
   }
 }
+
+/* ---------- Módulo de monitoreo (El Niño · bancos tipo II) ---------- */
+
+.mon-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.mon-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.mon-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mon-select-col {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .mon-grid-2,
+  .mon-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mon-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mon-select-col {
+    width: 100%;
+  }
+
+  .mon-card {
+    padding: 16px 14px !important;
+  }
+}
+
+@media print {
+  .mon-noprint {
+    display: none !important;
+  }
+}
